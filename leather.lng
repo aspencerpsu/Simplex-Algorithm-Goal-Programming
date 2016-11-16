@@ -1,0 +1,30 @@
+MODEL:
+
+!Objectives defined and interpreted below:;
+
+SETS:
+	 LEATHER/1..2/: PROFIT, TIME, X, S;
+ENDSETS
+
+DATA:
+	PROFIT = 4 3;
+	TIME = 2 1;
+ENDDATA
+
+
+[OBJECTIVE]MAX = @SUM(LEATHER(I): X(I) * PROFIT(I));
+
+! constraints below:;
+[YIELD]@SUM(LEATHER(I): X(I)) + S1 = 40;
+
+[HOUR]@SUM(LEATHER(I): X(I) * TIME(I)) + S2 = 60;
+
+@FOR(LEATHER(I):   [VARIABLES]
+					X(I) >= 0;
+				);
+
+@FOR(LEATHER(I): [SLACKS]
+			S(I) >=0;
+	);
+
+END
